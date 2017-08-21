@@ -1,12 +1,8 @@
 package coin
 
 import (
-	"bytes"
-	"crypto/sha256"
-	"encoding/binary"
-	"io"
-
 	"golang.org/x/crypto/ripemd160"
+	"crypto/sha256"
 )
 
 const (

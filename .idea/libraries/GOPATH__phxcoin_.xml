@@ -2,22 +2,22 @@
   <library name="GOPATH &lt;phxcoin&gt;">
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../protoc" />
-      <root url="file://$PROJECT_DIR$/../phx_coinbase" />
       <root url="file://$PROJECT_DIR$/../mycode" />
       <root url="file://$PROJECT_DIR$/../github.com" />
       <root url="file://$PROJECT_DIR$/../compose" />
       <root url="file://$PROJECT_DIR$/../box" />
+      <root url="file://$PROJECT_DIR$/../存档" />
       <root url="file://$PROJECT_DIR$/../golang.org" />
       <root url="file://$PROJECT_DIR$/../used" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="file://$PROJECT_DIR$/../protoc" />
-      <root url="file://$PROJECT_DIR$/../phx_coinbase" />
       <root url="file://$PROJECT_DIR$/../mycode" />
       <root url="file://$PROJECT_DIR$/../github.com" />
       <root url="file://$PROJECT_DIR$/../compose" />
       <root url="file://$PROJECT_DIR$/../box" />
+      <root url="file://$PROJECT_DIR$/../存档" />
       <root url="file://$PROJECT_DIR$/../golang.org" />
       <root url="file://$PROJECT_DIR$/../used" />
     </SOURCES>
