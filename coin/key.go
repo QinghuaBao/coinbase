@@ -16,26 +16,6 @@ type Signature struct {
 	HashType byte
 }
 
-func NewPublicKey(buf []byte) (res *PublicKey, e error) {
-	res = new(PublicKey)
-	if !res.XY.ParsePubkey(buf) {
-		e = errors.New("NewPublicKey: Unknown format: " + hex.EncodeToString(buf[:]))
-		res = nil
-	}
-	return
-}
-
-func NewSignature(buf []byte) (*Signature, error) {
-	sig := new(Signature)
-	le := sig.ParseBytes(buf)
-	if le < 0 {
-		return nil, errors.New("NewSignature: ParseBytes error")
-	}
-	if le < len(buf) {
-		sig.HashType = buf[len(buf)-1]
-	}
-	return sig, nil
-}
 
 // Recoved public key form a signature
 func (sig *Signature) RecoverPublicKey(msg []byte, recid int) (key *PublicKey) {
