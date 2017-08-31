@@ -29,9 +29,9 @@ func (coin *Hydruscoin) coinbase(store Store, args []string) ([]byte, error) {
 	}
 	logger.Debugf("tx: %v", tx)
 
-	if len(tx.Txin) == 0 {
-		return nil, ErrInvalidTX
-	}
+	//if len(tx.Txin) == 0 {
+	//	return nil, ErrInvalidTX
+	//}
 	txhash := TxHash(tx)
 	execResult := &ExecResult{}
 
