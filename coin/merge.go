@@ -15,7 +15,7 @@ func (coin *Hydruscoin) merge(store Store, account *Account) ([]byte, error) {
 
 	tx := new(TX)
 	tx.Founder = "blockchain-foam"
-	tx.Timestamp = time.Now().UTC().Unix()
+	tx.Timestamp = 1060762481
 	tx.Version = 1
 	logger.Debugf("1")
 	//固定到数组
