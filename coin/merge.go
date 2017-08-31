@@ -2,7 +2,6 @@ package coin
 
 import (
 	"sort"
-	"time"
 
 	"github.com/golang/protobuf/proto"
 	//"github.com/hyperledger/fabric/coinbase/client"
