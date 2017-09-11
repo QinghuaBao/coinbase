@@ -106,7 +106,13 @@ func (s *ChaincodeStore) InitCoinInfo() error {
 		AccountTotal: 0,
 		TxoutTotal:   0,
 		TxTotal:      0,
-		Placeholder:  "placeholder",
+		Session: &HydruscoinInfo_POVSession{
+			TxCount:               0,
+			CurrentAlpha:          0.01,
+			CurrentTotalIncentive: 0.0,
+			Threshold:             100.0,
+		},
+		Placeholder: "placeholder",
 	}
 
 	return s.PutCoinInfo(coinInfo)
