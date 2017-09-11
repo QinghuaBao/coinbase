@@ -44,10 +44,10 @@ func (coin *Hydruscoin) coinbase(store Store, args []string) ([]byte, error) {
 	// Loop through outputs
 	for index, output := range tx.Txout {
 		//verfiy address
-		flag := verifyAddr(output.GetScriptPubKey(), output.Addr, tx.Version)
-		if !flag {
-			return nil, ErrInvalidTX
-		}
+		//flag := verifyAddr(output.GetScriptPubKey(), output.Addr, tx.Version)
+		//if !flag {
+		//	return nil, ErrInvalidTX
+		//}
 
 		//		pubkey, err := hex.DecodeString(output.ScriptPubKey)
 		//		if err != nil {
