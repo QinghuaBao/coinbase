@@ -19,13 +19,15 @@ func updatePovSession(store Store, session *HydruscoinInfo_POVSession) {
 	session.TxCount = 0
 }
 
-func doIncentive(store Store, incentives map[string]*TX_TXOUT, version uint64, coin *Hydruscoin) ([]byte, error) {
+func doIncentive(store Store, incentives *map[string]*TX_TXOUT, version uint64, coin *Hydruscoin) ([]byte, error) {
 	logger.Debug("Doing Incentives")
 
 	tx := &TX{Txout: make([]*TX_TXOUT, len(*incentives)), Version: version, Timestamp: 1060762481, Founder: "blockchain"}
 
-	for _, val := range incentives {
-		tx.Txout = append(tx.Txout, val)
+	i := 0
+	for _, val := range *incentives {
+		tx.Txout[i] = val
+		i++
 	}
 
 	arg, err := proto.Marshal(tx)
