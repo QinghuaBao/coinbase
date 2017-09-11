@@ -10,6 +10,7 @@ import (
 	//"github.com/hyperledger/fabric/coinbase/sql"
 
 	"github.com/golang/protobuf/proto"
+	"math"
 )
 
 func (coin *Hydruscoin) transfer(store Store, args []string) ([]byte, error) {
@@ -105,6 +106,7 @@ func (coin *Hydruscoin) transfer(store Store, args []string) ([]byte, error) {
 	//	return nil, err
 	//}
 
+	incentives := make(map[string]*TX_TXOUT)
 	for idx, to := range tx.Txout {
 		flag := verifyAddr(to.ScriptPubKey, tx.Txin[0].GetAddr(), tx.Version)
 		if !flag {
@@ -134,6 +136,20 @@ func (coin *Hydruscoin) transfer(store Store, args []string) ([]byte, error) {
 		}
 		account.Balance += to.Value
 		account.Txouts[outKey.String()] = to
+
+		incentiveTxout, ok := incentives[to.GetAddr()]
+		if ok != true {
+			incentiveTxout = &TX_TXOUT{
+				Addr:         to.GetAddr(),
+				ScriptPubKey: to.ScriptPubKey,
+				Value:        0,
+				Until:        -1,
+			}
+			incentives[to.GetAddr()] = incentiveTxout
+		}
+		deltaIncentive := int64(math.Ceil(float64(coinInfo.Session.CurrentAlpha*float32(to.Value) + 0.5)))
+		incentiveTxout.Value += deltaIncentive
+		coinInfo.Session.CurrentTotalIncentive += deltaIncentive
 
 		//save account
 		if err := store.PutAccount(account); err != nil {
@@ -207,6 +223,13 @@ func (coin *Hydruscoin) transfer(store Store, args []string) ([]byte, error) {
 	//	return nil, err
 	//}
 
+	response, err := doIncentive(store, &incentives, tx.Version, coin)
+	if err != nil {
+		return response, err
+	}
+	if coinInfo.Session.CurrentTotalIncentive >= INCENT_THREADSHOLD {
+		updatePovSession(store, coinInfo.Session)
+	}
 	logger.Debugf("put tx into mysql")
 
 	// save coin stat
