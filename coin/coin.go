@@ -37,7 +37,7 @@ const (
 	IF_REGISTER string = "invoke_register"
 	IF_COINBASE string = "invoke_coinbase"
 	IF_TRANSFER string = "invoke_transfer"
-	IF_POV      string = "invoke_pov"
+	IF_POV      string = "invoke_transfer_pov"
 )
 
 // Invoke

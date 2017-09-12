@@ -2,10 +2,7 @@ package coin
 
 import (
 	"encoding/base64"
-	"encoding/hex"
 	"errors"
-	"strconv"
-	"strings"
 	"time"
 	//"github.com/hyperledger/fabric/coinbase/sql"
 
