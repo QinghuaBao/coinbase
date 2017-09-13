@@ -144,7 +144,7 @@ func (coin *Hydruscoin) pov_transfer(store Store, args []string) ([]byte, error)
 			}
 			incentives[to.GetAddr()] = incentiveTxout
 		}
-		deltaIncentive := int64(math.Ceil(float64(coinInfo.Session.CurrentAlpha*float32(to.Value) + 0.5)))
+		deltaIncentive := coinInfo.Session.CurrentAlpha*to.Value/100
 		incentiveTxout.Value += deltaIncentive
 		coinInfo.Session.CurrentTotalIncentive += deltaIncentive
 
@@ -231,12 +231,15 @@ func (coin *Hydruscoin) pov_transfer(store Store, args []string) ([]byte, error)
 	if err != nil {
 		return response, err
 	}
+	if coinInfo, err = store.GetCoinInfo(); err != nil{
+		return nil, err
+	}
 	if coinInfo.Session.CurrentTotalIncentive >= INCENT_THREADSHOLD {
-		updatePovSession(store, coinInfo.Session)
+		updatePovSession(store, coinInfo.Session, tx.Timestamp)
 	}
 	logger.Debugf("put tx into mysql")
 
-	coinInfo.TxTotal += 1
+	//coinInfo.TxTotal += 1
 	if err := store.PutCoinInfo(coinInfo); err != nil {
 		return nil, err
 	}

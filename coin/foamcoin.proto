@@ -87,14 +87,14 @@ message HydruscoinInfo {
         int64 txCount = 1;
         int64 threshold = 2;
         int64 currentTotalIncentive = 3;
-        float currentAlpha = 4;
+        int64 currentAlpha = 4;
     }
     POVSession session = 5;
     // when you init, you put other valiables into 0, so message bytes will be nil, can't be put into states
     string placeholder = 6;
 }
 message Test{
-    float INCENT_T0 = 1;
-    float INCENT_ALPHA0 = 2;
+    int64 INCENT_T0 = 1;
+    int64 INCENT_ALPHA0 = 2;
     int64 INCENT_THREADSHOLD = 3;
 }

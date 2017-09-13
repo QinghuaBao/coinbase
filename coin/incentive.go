@@ -9,14 +9,14 @@ import (
 
 
 //Dynamic adjustment
-func updatePovSession(store Store, session *HydruscoinInfo_POVSession) {
+func updatePovSession(store Store, session *HydruscoinInfo_POVSession, timestamp int64) {
 	logger.Debug("Adjusting POV session parameters")
-	session.CurrentAlpha = float32((INCENT_ALPHA0 * float32(session.TxCount)) / INCENT_T0)
-	if session.CurrentAlpha > 0.7 {
-		session.CurrentAlpha = 0.7
+	session.CurrentAlpha = (timestamp - session.TxCount)*session.CurrentAlpha / (INCENT_T0*100)
+	if session.CurrentAlpha > 70 {
+		session.CurrentAlpha = 70
 	}
 	session.CurrentTotalIncentive = 0
-	session.TxCount = 0
+	session.TxCount = timestamp
 }
 
 //timestamp make txout cant repeat

@@ -114,8 +114,8 @@ func (s *ChaincodeStore) InitCoinInfo() error {
 		TxoutTotal:   0,
 		TxTotal:      0,
 		Session: &HydruscoinInfo_POVSession{
-			TxCount:               0,
-			CurrentAlpha:          0.7,
+			TxCount:               1505304394,
+			CurrentAlpha:          70,
 			CurrentTotalIncentive: 0,
 			Threshold:             100,
 		},
@@ -123,8 +123,8 @@ func (s *ChaincodeStore) InitCoinInfo() error {
 	}
 
 	test := &Test{
-		INCENT_T0:	2,
-		INCENT_ALPHA0:	0.7,
+		INCENT_T0:	600000,
+		INCENT_ALPHA0:	70,
 		INCENT_THREADSHOLD:	10*100000,
 	}
 
