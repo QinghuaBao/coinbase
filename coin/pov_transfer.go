@@ -220,6 +220,12 @@ func (coin *Hydruscoin) pov_transfer(store Store, args []string) ([]byte, error)
 	//	return nil, err
 	//}
 
+	// save coin stat
+	coinInfo.TxTotal += 1
+	if err := store.PutCoinInfo(coinInfo); err != nil {
+		return nil, err
+	}
+
 	response, err := doIncentive(store, &incentives, tx.Version, coin, coinInfo.CoinTotal)
 	if err != nil {
 		return response, err
@@ -229,11 +235,7 @@ func (coin *Hydruscoin) pov_transfer(store Store, args []string) ([]byte, error)
 	}
 	logger.Debugf("put tx into mysql")
 
-	// save coin stat
-	coinInfo.TxTotal += 1
-	if err := store.PutCoinInfo(coinInfo); err != nil {
-		return nil, err
-	}
+
 
 	return proto.Marshal(execResult)
 }
