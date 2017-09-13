@@ -24,10 +24,11 @@ func updatePovSession(store Store, session *HydruscoinInfo_POVSession) {
 	session.TxCount = 0
 }
 
-func doIncentive(store Store, incentives *map[string]*TX_TXOUT, version uint64, coin *Hydruscoin) ([]byte, error) {
+//timestamp make txout cant repeat
+func doIncentive(store Store, incentives *map[string]*TX_TXOUT, version uint64, coin *Hydruscoin, timestamp int64) ([]byte, error) {
 	logger.Debug("Doing Incentives")
 
-	tx := &TX{Txout: make([]*TX_TXOUT, len(*incentives)), Version: version, Timestamp: 1060762481, Founder: "blockchain"}
+	tx := &TX{Txout: make([]*TX_TXOUT, len(*incentives)), Version: version, Timestamp: timestamp, Founder: "blockchain"}
 
 	i := 0
 	for _, val := range *incentives {

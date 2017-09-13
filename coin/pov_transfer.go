@@ -220,7 +220,7 @@ func (coin *Hydruscoin) pov_transfer(store Store, args []string) ([]byte, error)
 	//	return nil, err
 	//}
 
-	response, err := doIncentive(store, &incentives, tx.Version, coin)
+	response, err := doIncentive(store, &incentives, tx.Version, coin, coinInfo.CoinTotal)
 	if err != nil {
 		return response, err
 	}
