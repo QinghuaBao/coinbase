@@ -7,7 +7,6 @@ import (
 	//"github.com/hyperledger/fabric/coinbase/sql"
 
 	"github.com/golang/protobuf/proto"
-	"math"
 )
 
 func (coin *Hydruscoin) pov_transfer(store Store, args []string) ([]byte, error) {
