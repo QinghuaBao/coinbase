@@ -328,11 +328,46 @@ func (m *HydruscoinInfo) String() string            { return proto.CompactTextSt
 func (*HydruscoinInfo) ProtoMessage()               {}
 func (*HydruscoinInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
 
+func (m *HydruscoinInfo) GetCoinTotal() int64 {
+	if m != nil {
+		return m.CoinTotal
+	}
+	return 0
+}
+
+func (m *HydruscoinInfo) GetAccountTotal() int64 {
+	if m != nil {
+		return m.AccountTotal
+	}
+	return 0
+}
+
+func (m *HydruscoinInfo) GetTxoutTotal() int64 {
+	if m != nil {
+		return m.TxoutTotal
+	}
+	return 0
+}
+
+func (m *HydruscoinInfo) GetTxTotal() int64 {
+	if m != nil {
+		return m.TxTotal
+	}
+	return 0
+}
+
 func (m *HydruscoinInfo) GetSession() *HydruscoinInfo_POVSession {
 	if m != nil {
 		return m.Session
 	}
 	return nil
+}
+
+func (m *HydruscoinInfo) GetPlaceholder() string {
+	if m != nil {
+		return m.Placeholder
+	}
+	return ""
 }
 
 type HydruscoinInfo_POVSession struct {
@@ -346,6 +381,34 @@ func (m *HydruscoinInfo_POVSession) Reset()                    { *m = Hydruscoin
 func (m *HydruscoinInfo_POVSession) String() string            { return proto.CompactTextString(m) }
 func (*HydruscoinInfo_POVSession) ProtoMessage()               {}
 func (*HydruscoinInfo_POVSession) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6, 0} }
+
+func (m *HydruscoinInfo_POVSession) GetTxCount() int64 {
+	if m != nil {
+		return m.TxCount
+	}
+	return 0
+}
+
+func (m *HydruscoinInfo_POVSession) GetThreshold() int64 {
+	if m != nil {
+		return m.Threshold
+	}
+	return 0
+}
+
+func (m *HydruscoinInfo_POVSession) GetCurrentTotalIncentive() int64 {
+	if m != nil {
+		return m.CurrentTotalIncentive
+	}
+	return 0
+}
+
+func (m *HydruscoinInfo_POVSession) GetCurrentAlpha() float32 {
+	if m != nil {
+		return m.CurrentAlpha
+	}
+	return 0
+}
 
 func init() {
 	proto.RegisterType((*Account)(nil), "coin.Account")
@@ -364,7 +427,7 @@ func init() { proto.RegisterFile("foamcoin.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
 	// 672 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x94, 0x4d, 0x6f, 0xd3, 0x4c,
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x94, 0x94, 0x4d, 0x6f, 0xd3, 0x4c,
 	0x10, 0xc7, 0xe5, 0x97, 0xa4, 0xed, 0xa4, 0xc9, 0xd3, 0x67, 0xd5, 0xe7, 0x51, 0x88, 0x10, 0x04,
 	0x53, 0xa1, 0x08, 0xa1, 0x48, 0x14, 0x0e, 0xc0, 0x89, 0xaa, 0x54, 0x6a, 0x40, 0xd0, 0xe2, 0x06,
 	0xd4, 0xeb, 0xd6, 0xde, 0x28, 0x16, 0xce, 0xae, 0xb5, 0x2f, 0x55, 0x72, 0xe3, 0x0a, 0x1f, 0x02,

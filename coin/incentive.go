@@ -6,15 +6,20 @@ import (
 )
 
 const (
-	INCENT_T0          float64 = 1000
-	INCENT_ALPHA0      float64 = 0.1
-	INCENT_THREADSHOLD int64   = 1000000
+	//coinbase 100 phcoin need txout
+	INCENT_T0          float64 = 2
+	INCENT_ALPHA0      float64 = 0.7
+	//pre 100 phcoin adjust
+	INCENT_THREADSHOLD int64   = 100*100000
 )
 
 //Dynamic adjustment
 func updatePovSession(store Store, session *HydruscoinInfo_POVSession) {
 	logger.Debug("Adjusting POV session parameters")
 	session.CurrentAlpha = float32((INCENT_ALPHA0 * float64(session.TxCount)) / INCENT_T0)
+	if session.CurrentAlpha > 0.7 {
+		session.CurrentAlpha = 0.7
+	}
 	session.CurrentTotalIncentive = 0
 	session.TxCount = 0
 }

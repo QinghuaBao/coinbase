@@ -108,9 +108,9 @@ func (s *ChaincodeStore) InitCoinInfo() error {
 		TxTotal:      0,
 		Session: &HydruscoinInfo_POVSession{
 			TxCount:               0,
-			CurrentAlpha:          0.01,
-			CurrentTotalIncentive: 0.0,
-			Threshold:             100.0,
+			CurrentAlpha:          0.7,
+			CurrentTotalIncentive: 0,
+			Threshold:             100,
 		},
 		Placeholder: "placeholder",
 	}
