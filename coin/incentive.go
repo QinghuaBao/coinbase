@@ -12,7 +12,7 @@ import (
 func updatePovSession(store Store, session *HydruscoinInfo_POVSession, timestamp int64) {
 	logger.Debug("Adjusting POV session parameters")
 	session.CurrentAlpha = (timestamp - session.TxCount)*session.CurrentAlpha / (INCENT_T0*100)
-	if session.CurrentAlpha > 70 {
+	if session.CurrentAlpha > 70 || session.CurrentAlpha <= 0{
 		session.CurrentAlpha = 70
 	}
 	session.CurrentTotalIncentive = 0
