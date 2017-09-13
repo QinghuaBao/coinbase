@@ -13,10 +13,10 @@ import (
 const coinInfoKey = "HydruscoinInfo"
 const testKey = "pov_test"
 	//coinbase 100 phcoin need txout
-	var INCENT_T0          float64 = 2
-	var INCENT_ALPHA0      float64 = 0.7
+	var INCENT_T0          int64
+	var INCENT_ALPHA0      int64
 	//pre 100 phcoin adjust
-	var INCENT_THREADSHOLD int64   = 100*100000
+	var INCENT_THREADSHOLD int64
 // Key represents the key for a transaction in storage. It has both a
 // hash and index
 type Key struct {
