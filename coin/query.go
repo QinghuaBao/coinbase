@@ -77,7 +77,16 @@ func (coin *Hydruscoin) queryCoin(store Store, args []string) ([]byte, error) {
 	}
 
 	logger.Debugf("query lepuscoin info: %+v", coinInfo)
-	return proto.Marshal(coinInfo)
+
+	protobyte, err := proto.Marshal(coinInfo)
+	if err != nil {
+		logger.Debugf("tx marshal error: %v", err)
+		return nil, err
+	}
+
+	protobytebase64 := make([]byte, base64.StdEncoding.EncodedLen(len(protobyte)))
+	base64.StdEncoding.Encode(protobytebase64, protobyte)
+	return protobytebase64, err
 }
 
 //added
