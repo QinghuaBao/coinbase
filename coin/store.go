@@ -11,7 +11,12 @@ import (
 )
 
 const coinInfoKey = "HydruscoinInfo"
-
+const testKey = "pov_test"
+	//coinbase 100 phcoin need txout
+	var INCENT_T0          float64 = 2
+	var INCENT_ALPHA0      float64 = 0.7
+	//pre 100 phcoin adjust
+	var INCENT_THREADSHOLD int64   = 100*100000
 // Key represents the key for a transaction in storage. It has both a
 // hash and index
 type Key struct {
@@ -58,6 +63,8 @@ type Store interface {
 	GetAccount(string) (*Account, error)
 	PutAccount(*Account) error
 	GetAccountTxout(addr string, num uint32) (*Account, error)
+	GetTest() (*Test, error)
+	PutTest(*Test) error
 }
 
 // Store struct uses a chaincode stub for state access
@@ -115,6 +122,21 @@ func (s *ChaincodeStore) InitCoinInfo() error {
 		Placeholder: "placeholder",
 	}
 
+	test := &Test{
+		INCENT_T0:	2,
+		INCENT_ALPHA0:	0.7,
+		INCENT_THREADSHOLD:	10*100000,
+	}
+
+	INCENT_T0 = test.INCENT_T0
+	INCENT_ALPHA0 = test.INCENT_ALPHA0
+	//pre 100 phcoin adjust
+	INCENT_THREADSHOLD = test.GetINCENT_THREADSHOLD()
+
+	err := s.PutTest(test)
+	if err != nil {
+		return err
+	}
 	return s.PutCoinInfo(coinInfo)
 }
 
@@ -220,4 +242,35 @@ func (s *ChaincodeStore) GetAccountTxout(addr string, num uint32) (*Account, err
 	}
 	account := ParseAccount(accountslice)
 	return account, nil
+}
+
+func (s *ChaincodeStore) GetTest() (*Test, error) {
+	data, err := s.stub.GetState(testKey)
+	if err != nil {
+		return nil, err
+	}
+
+	if data == nil || len(data) == 0 {
+		return nil, ErrKeyNoData
+	}
+
+	coinfo, err := ParseTestBytes(data)
+	if err != nil {
+		return nil, err
+	}
+
+	return coinfo, nil
+}
+
+func (s *ChaincodeStore) PutTest(coinfo *Test) error {
+	coinBytes, err := proto.Marshal(coinfo)
+	if err != nil {
+		return err
+	}
+
+	if err := s.stub.PutState(testKey, coinBytes); err != nil {
+		return err
+	}
+
+	return nil
 }

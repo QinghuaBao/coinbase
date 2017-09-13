@@ -5,13 +5,7 @@ import (
 	"encoding/base64"
 )
 
-const (
-	//coinbase 100 phcoin need txout
-	INCENT_T0          float64 = 2
-	INCENT_ALPHA0      float64 = 0.7
-	//pre 100 phcoin adjust
-	INCENT_THREADSHOLD int64   = 100*100000
-)
+
 
 //Dynamic adjustment
 func updatePovSession(store Store, session *HydruscoinInfo_POVSession) {

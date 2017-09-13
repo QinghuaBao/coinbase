@@ -41,6 +41,15 @@ func ParseHydruscoinInfoBytes(infoBytes []byte) (*HydruscoinInfo, error) {
 	return info, nil
 }
 
+func ParseTestBytes(infoBytes []byte) (*Test, error) {
+	info := new(Test)
+	if err := proto.Unmarshal(infoBytes, info); err != nil {
+		return nil, err
+	}
+
+	return info, nil
+}
+
 func MapToSlice(txout map[string]*TX_TXOUT, txoutmapslice []*TxoutMap) {
 	temp := make([]string, len(txout))
 

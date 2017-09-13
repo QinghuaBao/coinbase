@@ -93,3 +93,8 @@ message HydruscoinInfo {
     // when you init, you put other valiables into 0, so message bytes will be nil, can't be put into states
     string placeholder = 6;
 }
+message Test{
+    float INCENT_T0 = 1;
+    float INCENT_ALPHA0 = 2;
+    int64 INCENT_THREADSHOLD = 3;
+}
