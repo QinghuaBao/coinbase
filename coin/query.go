@@ -154,3 +154,27 @@ func (coin *Hydruscoin) queryAddrsTxout(store Store, args []string) ([]byte, err
 	base64.StdEncoding.Encode(protobytebase64, protobyte)
 	return protobytebase64, err
 }
+
+func (coin *Hydruscoin) queryTest(store Store, args []string) ([]byte, error) {
+	if len(args) != 0 {
+		return nil, ErrInvalidArgs
+	}
+
+	coinTest, err := store.GetTest()
+	if err != nil {
+		logger.Errorf("Error get coin test: %v", err)
+		return nil, err
+	}
+
+	logger.Debugf("query lepuscoin info: %+v", coinTest)
+
+	protobyte, err := proto.Marshal(coinTest)
+	if err != nil {
+		logger.Debugf("tx marshal error: %v", err)
+		return nil, err
+	}
+
+	protobytebase64 := make([]byte, base64.StdEncoding.EncodedLen(len(protobyte)))
+	base64.StdEncoding.Encode(protobytebase64, protobyte)
+	return protobytebase64, err
+}

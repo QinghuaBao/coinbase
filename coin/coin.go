@@ -70,6 +70,7 @@ const (
 	QF_BALANCE     = "query_balance"
 	QF_TXOUT_COUNT = "query_txout_count"
 	QF_ADDRS_TXOUT = "query_addrs_txout"
+	QF_TEST	       = "query_test"
 )
 
 // Query
@@ -90,6 +91,8 @@ func (coin *Hydruscoin) Query(stub shim.ChaincodeStubInterface, function string,
 		return coin.queryTxoutCount(store, args)
 	case QF_ADDRS_TXOUT:
 		return coin.queryAddrsTxout(store, args)
+	case QF_TEST:
+		return coin.queryTest(store, args)
 	default:
 		return nil, ErrUnsupportedOperation
 	}
