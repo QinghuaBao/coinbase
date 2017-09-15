@@ -12,6 +12,8 @@ import (
 
 const coinInfoKey = "HydruscoinInfo"
 const testKey = "pov_test"
+const incentivekey = "incentive_key"
+const delaynumber  = 2
 	//coinbase 100 phcoin need txout
 	var INCENT_T0          int64
 	var INCENT_ALPHA0      int64
@@ -65,6 +67,8 @@ type Store interface {
 	GetAccountTxout(addr string, num uint32) (*Account, error)
 	GetTest() (*Test, error)
 	PutTest(*Test) error
+	PutIncentive(*Incentive) error
+	GetIncentive() (*Incentive, error)
 }
 
 // Store struct uses a chaincode stub for state access
@@ -269,6 +273,37 @@ func (s *ChaincodeStore) PutTest(coinfo *Test) error {
 	}
 
 	if err := s.stub.PutState(testKey, coinBytes); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *ChaincodeStore) GetIncentive() (*Incentive, error) {
+	data, err := s.stub.GetState(incentivekey)
+	if err != nil {
+		return nil, err
+	}
+
+	if data == nil || len(data) == 0 {
+		return nil, ErrKeyNoData
+	}
+
+	coinfo, err := ParseIncentiveBytes(data)
+	if err != nil {
+		return nil, err
+	}
+
+	return coinfo, nil
+}
+
+func (s *ChaincodeStore) PutIncentive(coinfo *Incentive) error  {
+	coinBytes, err := proto.Marshal(coinfo)
+	if err != nil {
+		return err
+	}
+
+	if err := s.stub.PutState(incentivekey, coinBytes); err != nil {
 		return err
 	}
 

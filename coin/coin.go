@@ -39,6 +39,7 @@ const (
 	IF_TRANSFER string = "invoke_transfer"
 	IF_POV      string = "invoke_transfer_pov"
 	IF_TEST	    string = "invoke_test"
+	IF_INCENTIVE string = "invoke_incentive"
 )
 
 // Invoke
@@ -57,6 +58,8 @@ func (coin *Hydruscoin) Invoke(stub shim.ChaincodeStubInterface, function string
 		return coin.pov_transfer(store, args)
 	case IF_TEST:
 		return coin.test(store, args)
+	case IF_INCENTIVE:
+		return coin.incentive(store, args)
 	default:
 		return nil, ErrUnsupportedOperation
 	}

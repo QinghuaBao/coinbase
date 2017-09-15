@@ -165,9 +165,11 @@ func (coin *Hydruscoin) queryTest(store Store, args []string) ([]byte, error) {
 		logger.Errorf("Error get coin test: %v", err)
 		return nil, err
 	}
-
 	logger.Debugf("query lepuscoin info: %+v", coinTest)
 
+	coinTest.INCENT_THREADSHOLD = INCENT_THREADSHOLD
+	coinTest.INCENT_ALPHA0 = INCENT_ALPHA0
+	coinTest.INCENT_T0 = INCENT_T0
 	protobyte, err := proto.Marshal(coinTest)
 	if err != nil {
 		logger.Debugf("tx marshal error: %v", err)

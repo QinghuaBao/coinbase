@@ -98,3 +98,8 @@ message Test{
     int64 INCENT_ALPHA0 = 2;
     int64 INCENT_THREADSHOLD = 3;
 }
+
+message Incentive{
+    repeated TX tx = 1;
+    repeated int64 id = 2;
+}

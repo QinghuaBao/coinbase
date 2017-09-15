@@ -2,9 +2,41 @@ package coin
 
 import (
 	"github.com/golang/protobuf/proto"
-	"encoding/base64"
 	"sort"
+	"errors"
 )
+
+
+
+func (coin *Hydruscoin) incentive(store Store, args []string) ([]byte, error) {
+	if len(args) != 0 {
+		return nil, ErrInvalidArgs
+	}
+
+	inc, err := store.GetIncentive()
+	logger.Debugf("incentive begin: %v", inc)
+	if err != nil {
+		return nil, errors.New("cant get incentive")
+	}
+
+	end := 0
+	for i, id := range inc.Id {
+		if id >= delaynumber {
+			if _, err := coinbase(store, inc.Tx[i]);err != nil  {
+				return nil, err
+			}
+			end++
+		}
+		inc.Id[i]++
+	}
+
+	inc.Id = inc.Id[end:]
+	inc.Tx = inc.Tx[end:]
+	logger.Debugf("incentive end: %v", inc)
+	err = store.PutIncentive(inc)
+
+	return nil, err
+}
 
 
 
@@ -22,36 +54,31 @@ func updatePovSession(store Store, session *HydruscoinInfo_POVSession, timestamp
 //timestamp make txout cant repeat
 func doIncentive(store Store, incentives *map[string]*TX_TXOUT, version uint64, coin *Hydruscoin, timestamp int64) ([]byte, error) {
 	logger.Debug("Doing Incentives")
-
-	tx := &TX{Txout: make([]*TX_TXOUT, len(*incentives)), Version: version, Timestamp: timestamp, Founder: "blockchain"}
-
-	i := 0
-	for _, val := range *incentives {
-		tx.Txout[i] = val
-		i++
-	}
-
-	arg, err := proto.Marshal(tx)
+	inc, err := store.GetIncentive()
 	if err != nil {
-		return nil, err
+		logger.Warningf("get incentive error, creating one...")
+		inc = new(Incentive)
+		inc.Id = make([]int64, 0)
+		inc.Tx = make([]*TX, 0)
 	}
-	base64 := base64.StdEncoding.EncodeToString(arg)
-	return coinbase(store, []string{base64})
+
+
+	tx := &TX{Txout: make([]*TX_TXOUT, 0), Version: version, Timestamp: timestamp, Founder: "blockchain"}
+
+	for _, val := range *incentives {
+		tx.Txout = append(tx.Txout, val)
+	}
+
+	inc.Id = append(inc.Id, 0)
+	inc.Tx = append(inc.Tx, tx)
+	logger.Debugf("do Incentive, inc : %v", inc)
+
+	return "success", store.PutIncentive(inc)
 }
 
-func coinbase(store Store, args []string) ([]byte, error) {
-	if len(args) != 1 || args[0] == "" {
-		return nil, ErrInvalidArgs
-	}
+func coinbase(store Store, args []byte) ([]byte, error) {
 
-	txDataBase64 := args[0]
-	txData, err := base64.StdEncoding.DecodeString(txDataBase64)
-	if err != nil {
-		logger.Errorf("Decoding base64 error: %v\n", err)
-		return nil, err
-	}
-
-	tx, err := ParseTXBytes(txData)
+	tx, err := ParseTXBytes(args)
 	if err != nil {
 		logger.Errorf("Unmarshal tx bytes error: %v\n", err)
 		return nil, err
