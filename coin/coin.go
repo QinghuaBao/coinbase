@@ -4,6 +4,7 @@ import (
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	"github.com/hyperledger/fabric/flogging"
 	"github.com/op/go-logging"
+	"crypto/elliptic"
 )
 
 var (

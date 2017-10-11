@@ -99,24 +99,6 @@ func coinbase(store Store, args []byte) ([]byte, error) {
 
 	// Loop through outputs
 	for index, output := range tx.Txout {
-		//verfiy address
-		//flag := verifyAddr(output.GetScriptPubKey(), output.Addr, tx.Version)
-		//if !flag {
-		//	return nil, ErrInvalidTX
-		//}
-
-		//		pubkey, err := hex.DecodeString(output.ScriptPubKey)
-		//		if err != nil {
-		//			logger.Errorf("Error hex.DecodeString : %v", err)
-		//			return nil, err
-		//		}
-		//		addr := NewAddrFromPubkey(pubkey, byte(tx.Version))
-		//		//		logger.Debugf("addr: %v, version: %s", pubkey, tx.Version)
-		//		logger.Debugf("newaddrfrompubkey: %v, addr: %v", addr, output.Addr)
-		//		if !strings.EqualFold(addr.String(), output.Addr) {
-		//			logger.Errorf("genaddr: %v, addr: %v", addr.String(), output.Addr)
-		//			return nil, ErrInvalidTX
-		//		}
 
 		if output.Addr == "" {
 			logger.Errorf("output.Addr is null")

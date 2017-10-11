@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/phxcoin.iml" filepath="$PROJECT_DIR$/phxcoin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/phxcoin.iml" filepath="$PROJECT_DIR$/.idea/phxcoin.iml" />
+      <module fileurl="file://G:\Go-workspace\src\mycode\phxcoin\phxcoin.iml" filepath="G:\Go-workspace\src\mycode\phxcoin\phxcoin.iml" />
     </modules>
   </component>
 </project>
