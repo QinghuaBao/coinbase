@@ -1,18 +1,19 @@
 package btcd
 
 import (
-	"testing"
-	"fmt"
-	"github.com/btcd/btcec"
-	"github.com/btcd/chaincfg/chainhash"
 	"encoding/base64"
 	"encoding/hex"
+	"fmt"
+	"testing"
+
+	"github.com/btcd/btcec"
+	"github.com/btcd/chaincfg/chainhash"
 )
 
 func TestEncryption(t *testing.T) {
 	// Decode a hex-encoded private key.
 	s := "22a47fa09a223f2aa079edf85a7c2d4f87" +
-		"20ee63e502ee2869afab7de234b80c";
+		"20ee63e502ee2869afab7de234b80c"
 	pkBytes, err := hex.DecodeString(s)
 	if err != nil {
 		fmt.Println(err)
@@ -32,12 +33,11 @@ func TestEncryption(t *testing.T) {
 	//ansss := base64.StdEncoding.EncodeToString(x1)
 
 	//fmt.Printf("---base64: %s\n\n", ansss)
-	fmt.Printf("r:%s, s:%s\n",signature.R.String(), signature.S.String())
+	fmt.Printf("r:%s, s:%s\n", signature.R.String(), signature.S.String())
 
 	// Verify the signature for the message using the public key.
 	verified := signature.Verify(messageHash, pubKey)
 	fmt.Printf("Signature Verified? %v\n", verified)
-
 
 	//start
 	fmt.Print("verify..\n")
@@ -46,14 +46,14 @@ func TestEncryption(t *testing.T) {
 	sigB, _ := base64.StdEncoding.DecodeString(sig)
 	signature0, _ := btcec.ParseSignature(sigB, btcec.S256())
 
-	fmt.Printf("r:%s, s:%s\n",signature0.R.String(), signature0.S.String())
+	fmt.Printf("r:%s, s:%s\n", signature0.R.String(), signature0.S.String())
 
 	//message0 := "test message"
 
 	pubKeyStr := "AmLWWi4u6d2uOw8VPytfNMDdtKQYB5JEWFVIYHc8QeMy"
 	pubKeyB, _ := base64.StdEncoding.DecodeString(pubKeyStr)
 
-	pubkey0,_ := btcec.ParsePubKey(pubKeyB, btcec.S256())
+	pubkey0, _ := btcec.ParsePubKey(pubKeyB, btcec.S256())
 	verified0 := signature0.Verify([]byte(messageHash), pubkey0)
 
 	fmt.Printf("--Signature Verified? %v\n", verified0)
