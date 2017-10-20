@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/phxcoin.iml" filepath="$PROJECT_DIR$/phxcoin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/coinbase-0.8.iml" filepath="$PROJECT_DIR$/.idea/coinbase-0.8.iml" />
+      <module fileurl="file://G:\IDEA-workspace\coinbase-0.8\phxcoin.iml" filepath="G:\IDEA-workspace\coinbase-0.8\phxcoin.iml" />
     </modules>
   </component>
 </project>

@@ -3,10 +3,11 @@ package coin
 import (
 	"encoding/base64"
 	"encoding/hex"
-	"fmt"
 	"math/big"
-	"os/exec"
 	"strings"
+
+	"github.com/hyperledger/fabric/coinbase/btcd/btcec"
+	//	"github.com/hyperledger/fabric/coinbase/btcd/chaincfg/chainhash"
 )
 
 func stringToBigint(str string) (*big.Int, *big.Int) {
@@ -67,18 +68,37 @@ func Verify(tx *TX) bool {
 	pubScr := tx.Txout[0].GetScriptPubKey()
 	sigScript := tx.Txin[0].GetScript()
 	logger.Debugf("pubScr: %v, verifymessage: %v, sigScript: %v", pubScr, base64.StdEncoding.EncodeToString(verifymessage), sigScript)
-	cmd := exec.Command("java", "-jar", "Verify.jar", pubScr, base64.StdEncoding.EncodeToString(verifymessage), sigScript)
-	out, err := cmd.Output()
-	if err != nil {
-		logger.Errorf("exec Command Error: %v", err)
-		return false
-	}
-	fmt.Println(out)
-	if strings.EqualFold(string(out), "false") {
-		logger.Errorf("Verify Error: false")
-		return false
-	}
+	out := verfiyEcdsa(pubScr, base64.StdEncoding.EncodeToString(verifymessage), sigScript)
+	//cmd := exec.Command("java", "-jar", "Verify.jar", pubScr, base64.StdEncoding.EncodeToString(verifymessage), sigScript)
+	//out, err := cmd.Output()
+	//if err != nil {
+	//	logger.Errorf("exec Command Error: %v", err)
+	//	return false
+	//}
+	//fmt.Println(out)
+	//if strings.EqualFold(string(out), "false") {
+	//	logger.Errorf("Verify Error: false")
+	//	return false
+	//}
 
-	return true
+	return out
+}
 
+func verfiyEcdsa(pubScr string, message []byte, sigScript string) bool {
+
+	sigB, _ := base64.StdEncoding.DecodeString(sigScript)
+	signature0, _ := btcec.ParseSignature(sigB, btcec.S256())
+
+	//fmt.Printf("r:%s, s:%s\n",signature0.R.String(), signature0.S.String())
+
+	//message0 := "test message"
+
+	pubKeyB, _ := base64.StdEncoding.DecodeString(pubScr)
+
+	pubkey0, _ := btcec.ParsePubKey(pubKeyB, btcec.S256())
+	verified0 := signature0.Verify(message, pubkey0)
+
+	return verified0
+
+	//fmt.Printf("--Signature Verified? %v\n", verified0)
 }
