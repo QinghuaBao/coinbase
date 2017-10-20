@@ -17,12 +17,12 @@ func TestNewAddrFromPubkey(t *testing.T) {
 	//fmt.Println(privatekeystring)
 
 	privatekey, err := hex.DecodeString("2C0D42397C4575E3DC0CD54599D3ECF342EE15DC33C5E876D8DC6AA7F3D280B0")
-	pubstring := "BJykFEQYMSw4tRibN/QRcyLE91riTvKh19raoBCuk6wEuPhsoY1DnVEg7azzO9krPOFKQSOFPcrYaog3X4wBWTU="
+	pubstring := "BNf94GVnQ1XNecdDCVNBJhzhtUDGMYwWZrFWjAbTQwJLt8Jk0ye82OonfiaOaBYxQvLqE46sUPV04EOAmRluH1M="
 
 	pubbyte, err := base64.StdEncoding.DecodeString(pubstring)
 	fmt.Println("hex", byteToHexString(pubbyte))
-	//pubkey, err := hex.DecodeString(byteToHexString(pubbyte))
-	pubkey, err := hex.DecodeString("049CA4144418312C38B5189B37F4117322C4F75AE24EF2A1D7DADAA010AE93AC04B8F86CA18D439D5120EDACF33BD92B3CE14A4123853DCAD86A88375F8C015935")
+	pubkey, err := hex.DecodeString(byteToHexString(pubbyte))
+	//pubkey, err := hex.DecodeString("049CA4144418312C38B5189B37F4117322C4F75AE24EF2A1D7DADAA010AE93AC04B8F86CA18D439D5120EDACF33BD92B3CE14A4123853DCAD86A88375F8C015935")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -30,7 +30,7 @@ func TestNewAddrFromPubkey(t *testing.T) {
 	fmt.Println(pubkey, privatekey)
 
 	var version int
-	version = 0
+	version = 1
 
 	addr := NewAddrFromPubkey(pubkey, byte(version))
 	//fmt.Println(addr)
