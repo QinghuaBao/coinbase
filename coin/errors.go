@@ -52,5 +52,8 @@ var (
 	ErrAlreadyRegisterd = errors.New("the addr has been registerd into coin")
 	// ErrOutValueNegative
 	ErrOutValueNegative = errors.New("txout value negative")
+
+	 // ErrInvokeFunctionCrashed
+	ErrInvokeFunctionCrashed = errors.New("the Invoke function is crashed")
 )
 
