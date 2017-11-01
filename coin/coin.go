@@ -45,7 +45,11 @@ const (
 func (coin *Hydruscoin) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	// construct a new store
 	store := MakeChaincodeStore(stub)
-
+	defer func(){
+		if r := recover(); r != nil {
+			logger.Errorf("Recovered in Invoke: %v\n", r)
+		}
+	}()
 	switch function {
 	case IF_REGISTER:
 		return coin.registerAccount(store, args)
